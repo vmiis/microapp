@@ -3,8 +3,7 @@
         function F__ID(){
             //--------------------------------------------------------
             var u=window.location.origin;
-            if(u=="http://localhost:8000") u=u+"/auth.html";
-            else u=u+"/micro-app/auth.html"
+            u=u+"/auth.html"
             $vm.m_auth_signin=function(){
                 url='https://login.microsoftonline.com/common/oauth2/v2.0/authorize';
                 url+='?client_id=f39f8959-8cd7-4570-8c0f-548306bf899a'; //vmiis
