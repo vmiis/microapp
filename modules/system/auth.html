@@ -28,14 +28,12 @@
             }
             //--------------------------------------------------------
             $vm.f_auth_signin=function(){
-console.log(u);                
                 url='https://graph.facebook.com/oauth/authorize';
                 url+='?client_id=596805194160323';
                 url+='&response_type=code';
                 url+='&redirect_uri='+u;
                 url+='&scope=public_profile email';
                 url+='&state=exchange-facebook-token';
-console.log(url);                
                 window.open(url);
             }
             //--------------------------------------------------------
