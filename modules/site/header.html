@@ -14,11 +14,13 @@
             <input id="hamburger__ID" type="checkbox" style='display:none' />
             <div id=menu__ID>
                 <a href="?/Home"><i class="fa fa-home"></i> Home</a>
-                <a href="?/Panel"><i class="fas fa-list-ul"></i> About Microapp</a>
-                <span class="dropdown__ID"><a href="?/dropdown">Microapp</a>
+                <a href="?/Panel"><i class="fas fa-list-ul"></i> Use Cases</a>
+                <span class="dropdown__ID"><a href="?/dropdown">About Microapp</a>
                     <div class="dropdown-content__ID">
                         <a href="?/What is a Micro-app">What is a Micro-app</a>
                         <a href="?/Cost of running a Micro-app">Cost of running a Micro-app</a>
+                        <a href="?/Authentication">Authentication</a>
+                        <a href="?/Permissions Control">Permissions Control</a>
                     </div>
                 </span>
                 <span class="dropdown__ID"><a href="?/dropdown" id=signin__ID><i class="fa fa-user"></i> Sign In</a>
@@ -99,7 +101,7 @@
                     var title=$vm.module_list[nm].title;
                     if(title==undefined) title=nm.replace(/_/g,' ').replace(/-/g,' ');
                     if(i==L-1 || L==1) txt+=title;
-                    else txt+="<u nm="+nm+" style='cursor:pointer'>"+title+"</u>";
+                    else txt+="<u nm='"+nm+"' style='cursor:pointer'>"+title+"</u>";
                 }
                 $('#g_nav').html(txt);
                 $('#g_nav u').on('click',function(){
@@ -192,11 +194,6 @@
             white-space:nowrap;
         }        
         /*main menu*/
-        /*
-        #menu__ID ul{
-            margin: 0;
-        }
-        */
         #menu__ID a{
             display: inline-block;
             padding:6px 10px;
@@ -236,13 +233,6 @@
                 max-height: 0;
                 transition: max-height 0.5s;
             }
-            /*
-            #menu__ID ul {
-                padding: 0;
-                padding-right: 10px;
-            }
-            */
-
             #menu__ID li {
                 display: block;
                 padding:0px 0 0 15px;
