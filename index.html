@@ -38,7 +38,7 @@
             $vm.module_list={
                 header:     {url:$vm.hosting_path+"/modules/site/header.html"},
                 footer:     {url:$vm.hosting_path+"/modules/site/footer.html"},
-                home:       {url:$vm.hosting_path+"/modules/site/home.html",router:1},
+                Home:       {url:$vm.hosting_path+"/modules/site/home.html",router:1},
                 auth:       {url:$vm.hosting_path+"/modules/system/auth.html"},
                 token:      {url:$vm.hosting_path+"/modules/system/token.html"},
                 query:      {url:$vm.hosting_path+"/modules/system/query.html"},
@@ -51,8 +51,8 @@
                 arrayv:     {url:$vm.hosting_path+"/modules/system/viewer-array.html"},
             }
             //---------------------------------------------
-            $vm.first_module='home';
-            (function(){ var a=window.location.href.split('?/'); if(a.length==2) $vm.first_module=a[1].split('&')[0].replace(/\//g,'_'); }());
+            $vm.first_module='Home';
+            (function(){ var a=window.location.href.split('?/'); if(a.length==2) $vm.first_module=a[1].split('&')[0].replace(/\//g,'_').replace(/%20/g,' '); }());
             $vm.ready=function(){
             }
             //---------------------------------------------
@@ -91,8 +91,8 @@
                 
                 if(m_name!=undefined){ $vm.active_id=$vm.module_list[m_name].id; $vm.active_name=m_name; }
                 if($vm.active_id!='') $('#D'+$vm.active_id).css('min-height',$vm.min_height+"px");
-                if(m_name=='home') {$("#header").css("background","rgba(0,0,0,0)"); $('#midi_buttons').show(); $('#g_nav').hide(); }
-                else               {$("#header").css("background","rgba(0,0,0,0.8)");  $('#midi_buttons').hide(); $('#g_nav').show();}
+                if(m_name=='Home') {$("#header").css("background","rgba(0,0,0,0)");    $('#g_nav').hide(); }
+                else               {$("#header").css("background","rgba(0,0,0,0.8)");  $('#g_nav').show();}
             }
             //---------------------------------------------
             document.getElementById('layout').onscroll = function(){
@@ -216,7 +216,7 @@
             $vm.boot(); //start from here
             //=================================================
             $(window).on('scroll', function() {
-            if($vm.active_name=='home'){
+            if($vm.active_name=='Home'){
                 var y=-$(window).scrollTop()/3;
                 $('body').css({ 'background-position-y': y+'px'});
                 var r=-y/100; if(r>0.5) r=0.5;

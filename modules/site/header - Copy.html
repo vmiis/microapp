@@ -9,33 +9,34 @@
             </a>
         </div>
         <div id=middle__ID style='margin:auto 0; padding-left:15px;padding-top:15px'>
-            <a id=mobile_logo__ID href="Home" style='font-weight: bold;font-size:28px;color:#fff;text-decoration: none;'>
+            <a id=mobile_logo__ID href="home" style='font-weight: bold;font-size:28px;color:#fff;text-decoration: none;'>
             Web Portal</a>
-            <input id="hamburger__ID" type="checkbox" style='display:none' />
+            <input id="hamburger__ID" type="checkbox" style='display:none'>
             <div id=menu__ID>
-                <a href="?/Home"><i class="fa fa-home"></i> Home</a>
-                <a href="?/Panel"><i class="fas fa-list-ul"></i> About Microapp</a>
-                <span class="dropdown__ID"><a href="?/dropdown">Microapp</a>
-                    <div class="dropdown-content__ID">
-                        <a href="?/What is a Micro-app">What is a Micro-app</a>
-                        <a href="?/Cost of running a Micro-app">Cost of running a Micro-app</a>
-                    </div>
-                </span>
-                <span class="dropdown__ID"><a href="?/dropdown" id=signin__ID><i class="fa fa-user"></i> Sign In</a>
-                    <div class="dropdown-content__ID">
-                        <a onclick=$vm.m_auth_signin()><i class="fab fa-microsoft"></i> Microsoft</a>
-                        <a onclick=$vm.g_auth_signin()><i class="fab fa-google"></i> Google</a>
-                        <a onclick=$vm.f_auth_signin()><i class="fab fa-facebook"></i> Facebook</a>
-                        <a onclick=$vm.h_auth_signin()><i class="fab fa-github"></i> GitHub</a>
-                    </div>
-                </span>
-                <a href="" id=signout__ID onclick=$vm.auth_signout() ><i class="fa fa-user"></i> Sign Out</a>
+                <ul>
+                    <li><a href="?/home"><i class="fa fa-home"></i> Home</a></li>
+                    <li><a href="?/Panel"><i class="fas fa-list-ul"></i> About Microapp</a></li>
+                    <li class="dropdown__ID"><a href="?/dropdown" id=signin__ID><i class="fa fa-user"></i> Sign In</a>
+                        <div class="dropdown-content__ID">
+                            <a onclick=$vm.m_auth_signin()><i class="fab fa-microsoft"></i> Microsoft</a>
+                            <a onclick=$vm.g_auth_signin()><i class="fab fa-google"></i> Google</a>
+                            <a onclick=$vm.f_auth_signin()><i class="fab fa-facebook"></i> Facebook</a>
+                            <a onclick=$vm.h_auth_signin()><i class="fab fa-github"></i> GitHub</a>
+                        </div>
+                    </li>
+                    <li><a href="" id=signout__ID onclick=$vm.auth_signout() ><i class="fa fa-user"></i> Sign Out</a></li>
+                </ul>
             </div>
         </div>    
-        <div id=right__ID style='margin-right: 10px'><div id=menu_right__ID></div></div>   
-        <div top-right-corner id=top_right_corner__ID>
-            <span  id=username__ID></span>
-            <label id=m_icon__ID for="hamburger__ID" style='color:#fff;font-size:28px;margin:10px 5px 0 0'><i class="fa fa-bars"></i></label>
+        <div id=right__ID style='margin-right: 10px'>
+            <div id=menu_right__ID>
+            </div>
+            <label id=m_icon__ID for="hamburger__ID" style='color:#fff;font-size:28px;'><i class="fa fa-bars"></i></label>
+        </div>   
+        <div top-right-corner id=top_right_corner__ID class='d-none d-xl-block'>
+            <div>
+                <span id=username__ID></span>
+            </div>
         </div>
     </div>    
     <div id=g_nav style='height:25px'> </div>
@@ -48,15 +49,48 @@
             if($vm.resize_content!=undefined) $vm.resize_content();
             //--------------------------------------
             $('#signout__ID').hide();
+            
+            $vm.toggle_display=function(e){
+                /*
+                //var x = document.getElementById("myDIV");
+                
+                //alert(e.css('display'))
+                if (e.css('display') == "none") {
+                    e.show();
+                    console.log(111)
+                } 
+                else {
+                    e.hide();
+                    console.log(222)
+                }
+                */
+               console.log(e.html());
+                e.show();
+            }
+
+
             //------------------------------------
             $('#D__ID a').on('click',function(e){
                 e.preventDefault();
                 e.stopPropagation();
                 var module_name=$(this).attr('href').replace('?\/','');
-                var w=$(this).attr('w');if(w==1){window.open(module_name);return;}
+                var w=$(this).attr('w');
+                if(w==1){
+                    window.open(module_name);
+                    return;
+                }
                 if(module_name=='dropdown'){
-                    close_all_dropdown();
-                    $(this).next('div').show();
+                    //var aaa=$(this).next('div');
+                    //$vm.toggle_display(aaa);
+                    
+                    var w=$(this).closest('li').width();
+                    var mh=$(this).closest('li').find('ul').first().css('max-height');
+                    if(mh=='0px'){
+                        close_all_dropdown();
+                        $(this).closest('li').find('ul').first().css('max-height','600px');
+                    }
+                    else $(this).closest('li').find('ul').first().css('max-height','0px');
+                    $(this).closest('li').find('ul').first().css('min-width',w+'px');
                     return;
                     
                 }
@@ -69,9 +103,20 @@
                 if($(this).prop("checked")==false) close_all_dropdown();
             })
             //---------------------------------------------------------------
+            $('body').on('click',function(){
+                close_all_dropdown();
+            })
+            $('#menu__ID>ul>li>a').on('mouseover',function(e){
+                //close_all_dropdown();
+            })
+            //---------------------------------------------------------------
+            $('#menu__ID>ul>li>ul').on('mouseleave',function(e){
+                close_all_dropdown();
+            })
+            //---------------------------------------------------------------
             var close_all_dropdown=function(){
-                $('.dropdown-content__ID').each(function(){
-                    if($(this).css('max-height')=='600px') $(this).hide();
+                $('#D__ID ul').each(function(){
+                    if($(this).css('max-height')=='600px') $(this).css('max-height','0px');
                 })
             }
             //---------------------------------------------------------------
@@ -175,7 +220,7 @@
             display: inline-block;
         }
         .dropdown-content__ID {
-            display: none;
+            /*display: none;*/
             position: absolute;
             background-color: #333;
             min-width: 160px;
@@ -189,26 +234,8 @@
             display: block;
             width:100%;
             cursor:pointer;
-            white-space:nowrap;
         }        
-        /*main menu*/
-        /*
-        #menu__ID ul{
-            margin: 0;
-        }
-        */
-        #menu__ID a{
-            display: inline-block;
-            padding:6px 10px;
-            color:#fff;
-            text-shadow: 2px 2px 2px #000;
-        }
-        #menu__ID a:hover {
-            background-color: #555;
-            color: #29eca6;
-            border-radius:4px;
-            text-decoration: none;
-        }
+        .dropdown__ID:hover .dropdown-content__ID {display: block;}
         @media screen and (max-width: 768px) {
             #mobile_logo__ID,#hamburger__ID, #m_icon__ID{
                 display:block;
@@ -222,55 +249,57 @@
             #left__ID{
                 display:none;
             }
-            #hamburger__ID:checked ~ #menu__ID{
-                max-height:300px;
-            }
             #menu_right__ID{
                 display:none;
+            }
+            #hamburger__ID:checked ~ #menu__ID{
+                max-height:300px;
             }
             #right__ID label{
                 margin:0;
             }
+        }
+        /*main menu*/
+        #menu__ID ul{
+            margin: 0;
+        }
+        #menu__ID li{
+            display: inline-block;
+        }
+        #menu__ID a{
+            display: inline-block;
+            padding:6px 10px;
+            color:#fff;
+            text-shadow: 2px 2px 2px #000;
+        }
+        #menu__ID a:hover {
+            background-color: #555;
+            color: #29eca6;
+            border-radius:4px;
+            text-decoration: none;
+        }
+        @media screen and (max-width: 768px) {
             #menu__ID{
                 overflow:hidden;
                 max-height: 0;
                 transition: max-height 0.5s;
             }
-            /*
             #menu__ID ul {
                 padding: 0;
                 padding-right: 10px;
             }
-            */
-
+  
             #menu__ID li {
                 display: block;
                 padding:0px 0 0 15px;
             }
             #menu__ID a {
-                display:block;
                 padding: 5px 10px;
                 width: auto;
             }
             #menu__ID{
                 background-color: #212b35;
             }
-            .dropdown__ID {
-                display: block;
-            }
-            .dropdown-content__ID {
-                background-color: #212b35;
-                margin-left: 20px;
-                position:static;
-                max-height:600px;
-            }
-            #username__ID { display:none; }
-            #m_icon__ID { display:block; }
-        }
-        @media screen and (min-width: 768px) {
-            #username__ID { display:block; }
-            #m_icon__ID { display:none; }
-            .dropdown__ID:hover .dropdown-content__ID {display: block;}
         }
     </style>
 </div>
